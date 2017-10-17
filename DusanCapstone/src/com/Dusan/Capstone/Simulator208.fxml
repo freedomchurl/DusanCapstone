@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="homebutton" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resource/home.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <BorderPane prefHeight="380.0" prefWidth="330.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="85.0" right="85.0" top="20.0" />
+         </BorderPane.margin>
+         <top>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="330.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="250.0" style="-fx-background-color: yellow;" />
+                  <ImageView fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </center>
+</BorderPane>

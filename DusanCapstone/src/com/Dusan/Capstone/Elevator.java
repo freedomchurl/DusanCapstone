@@ -4,6 +4,12 @@ public class Elevator {
 
 	public int current_floor; // 현재 층을 알려준다.
 	public int inner_people; // 현재 안에 타고 있는 사람을 알려준다. 
+	
+	
+	public double max_weigth = 600;
+	public double current_wiegth;
+	
+	
 	public int low_floor; // 가장 낮은 층
 	public int high_floor; // 가장 높은 층 
 	
@@ -15,6 +21,7 @@ public class Elevator {
 		this.moving = 0;
 		this.inner_people = 0;
 		this.current_floor = 0;
+		this.current_wiegth = 0;
 	}
 	
 	Elevator(int low, int high)
@@ -24,6 +31,7 @@ public class Elevator {
 		this.inner_people = 0;
 		this.low_floor = low;
 		this.high_floor = high;	
+		this.current_wiegth = 0;
 	}
 	
 	

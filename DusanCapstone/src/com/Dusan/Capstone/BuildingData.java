@@ -1,6 +1,6 @@
 package com.Dusan.Capstone;
 
-public class Building {
+public class BuildingData {
 
 	public Elevator[] elevator = null;
 	
@@ -8,12 +8,12 @@ public class Building {
 	
 	
 	
-	Building()
+	BuildingData()
 	{
 		
 	}
 	
-	Building(int num)
+	BuildingData(int num)
 	{
 		// num은 엘리베이터의 개수
 		
@@ -22,7 +22,7 @@ public class Building {
 		// 여기다가 각각의 배열에 새로운 객체를 또 생성해야한다. 
 	}
 	
-	Building(int num, String name)
+	BuildingData(int num, String name)
 	{
 		elevator = new Elevator[num];
 		

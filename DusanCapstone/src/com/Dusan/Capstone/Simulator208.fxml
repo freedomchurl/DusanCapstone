@@ -6,9 +6,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
 
-<BorderPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<BorderPane prefHeight="500.0" fx:controller="com.Dusan.Capstone.Simulator208_Controller" prefWidth="500.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
@@ -24,15 +25,26 @@
       </HBox>
    </top>
    <center>
-      <BorderPane prefHeight="380.0" prefWidth="330.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="380.0" prefWidth="330.0" style="-fx-border-color: black; -fx-background-color: #f3f3f3;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="50.0" left="85.0" right="85.0" top="20.0" />
          </BorderPane.margin>
          <top>
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="330.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="330.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="60.0" prefWidth="250.0" style="-fx-background-color: yellow;" />
-                  <ImageView fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="state_floor" alignment="CENTER" prefHeight="60.0" prefWidth="250.0" text="4F">
+                     <font>
+                        <Font name="NanumMyeongjoExtraBold" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="state_arrow" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resource/arrow-up.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
                </children>
             </HBox>
          </top>

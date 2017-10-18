@@ -16,14 +16,25 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+	
+	Simulator208 my208 = new Simulator208();
+	Simulator310 my310 = new Simulator310();
+	
+	// 208,310의 엘리베이터 모습을 담는다.
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("DusanCapstone.fxml"));
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			
+			my310.setStage(primaryStage);
+			
+			my310.StartWindow();
+			my208.StartWindow();
+			
+			
+			
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -31,7 +42,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) throws Exception {
 		
-		
+		/*
 		String str = URLEncoder.encode("한글","UTF-8");
 		String url = "http://35.201.215.220/read_front.php";
 		
@@ -71,6 +82,7 @@ public class Main extends Application {
 		String getXml = sb.toString();
 		
 		System.out.println(getXml);
+		*/
 		
 		launch(args);
 		

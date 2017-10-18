@@ -27,12 +27,10 @@ public class Main extends Application {
 		try {
 			
 			my310.setStage(primaryStage);
+			// 310관은 primaryStage를 부여한다. 
 			
 			my310.StartWindow();
 			my208.StartWindow();
-			
-			
-			
 			
 			
 		} catch(Exception e) {

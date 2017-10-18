@@ -6,7 +6,8 @@ public class BuildingData {
 	
 	public String building_name = null;
 	
-	
+	public int low_floor;
+	public int high_floor;
 	
 	BuildingData()
 	{
@@ -27,6 +28,18 @@ public class BuildingData {
 		elevator = new Elevator[num];
 		
 		this.building_name = new String(name); // 이 빌딩의 이름을 저장한다.
+		
+		
+	}
+	
+	BuildingData(int num, String name,int low, int high)
+	{
+		elevator = new Elevator[num];
+		
+		this.building_name = new String(name);
+		
+		this.low_floor = low;
+		this.high_floor = high;
 		
 		
 	}

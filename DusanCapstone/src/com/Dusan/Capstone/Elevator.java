@@ -20,14 +20,14 @@ public class Elevator {
 	{
 		this.moving = 0;
 		this.inner_people = 0;
-		this.current_floor = 0;
+		this.current_floor = 1;
 		this.current_wiegth = 0;
 	}
 	
 	Elevator(int low, int high)
 	{
 		this.moving = 0;
-		this.current_floor = 0;
+		this.current_floor = 1;
 		this.inner_people = 0;
 		this.low_floor = low;
 		this.high_floor = high;	

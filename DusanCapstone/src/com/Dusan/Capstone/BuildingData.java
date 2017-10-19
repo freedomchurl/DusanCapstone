@@ -11,6 +11,7 @@ public class BuildingData {
 	
 	public People front[][]= null;
 	
+	public int num_elev = 0;
 	
 	BuildingData()
 	{

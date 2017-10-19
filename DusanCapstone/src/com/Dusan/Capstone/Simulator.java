@@ -43,11 +43,46 @@ public class Simulator {
 		
 		
 		this.InitBuilding();
+		my_controller.setData(this.building_data);
+		my_controller.StartUIUpdate();
 	}
 	
 	public void InitBuilding()
 	{
+		// 빌딩 정보를 초기화해야한다.
+		
+		// 초기화 해야할 부분은, low,high층
+		this.building_data.low_floor = 1;
+		this.building_data.high_floor = 1;
+		
+		// 빌딩이름
+		this.building_data.building_name = new String("BBD 빌딩");
+		
+		// 엘리베이터 개수
+		this.building_data.num_elev = 2;
+		
+		// 엘리베이터 할당
+		this.building_data.elevator = new Elevator[2];
+		
+		// front 초기화
+		this.building_data.front = new People[2][6];
+		// 엘리베이터가 2개, 6개 층
+		
+		for(int i=0;i<2;i++)
+		{
+			this.building_data.elevator[i] = new Elevator(1,6);
+			// 2개의 엘리베이터 모두 1~6층까지 운행한다.
+			
+			for(int j=0;j<6;j++)
+			{
+				this.building_data.front[i][j] = new People();
+			}
+		}
 		
 	}
 	
+	public void StartSimulator()
+	{
+		
+	}
 }

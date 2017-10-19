@@ -8,8 +8,8 @@ public class People {
 	
 	public void setPeople(int max)
 	{
-		people_num = (int) (Math.random()*10);
-		//0~9명 사이로
+		people_num = (int) (Math.random()*6);
+		//0~5명 사이로
 		
 		int tmp = (int) (Math.random() *2);
 		if(tmp==0)
@@ -23,5 +23,9 @@ public class People {
 			check = true; // 중복 생성을 막기 위해, check가 true일 경우 더이상 생성 X
 		
 		// 그리고 가져갈때 check를 false로 바꿔야한다.
+		
+		/*
+		 * 사람이 있어도 계속 추가될 수 있도록 할까? 단 방향은 변경되지 않도록.
+		 */
 	}
 }

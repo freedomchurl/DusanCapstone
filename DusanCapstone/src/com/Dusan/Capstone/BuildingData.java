@@ -9,6 +9,9 @@ public class BuildingData {
 	public int low_floor;
 	public int high_floor;
 	
+	public People front[][]= null;
+	
+	
 	BuildingData()
 	{
 		
@@ -29,7 +32,10 @@ public class BuildingData {
 		
 		this.building_name = new String(name); // 이 빌딩의 이름을 저장한다.
 		
-		
+		for(int i=0;i<num;i++)
+		{
+			elevator[i] = new Elevator(1,6);
+		}
 	}
 	
 	BuildingData(int num, String name,int low, int high)
@@ -38,9 +44,26 @@ public class BuildingData {
 		
 		this.building_name = new String(name);
 		
+		
+		for(int i=0;i<num;i++)
+		{
+			elevator[i] = new Elevator(1,6);
+		}
+		
 		this.low_floor = low;
 		this.high_floor = high;
 		
+		
+		front = new People[num][high-low+1];
+		// front 데이터를 초기화 한다.
+		
+		for(int i=0;i<num;i++)
+		{
+			for(int j=0;j<high-low+1;j++)
+			{
+				front[i][j] = new People();
+			}
+		}
 		
 	}
 }

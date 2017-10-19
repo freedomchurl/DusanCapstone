@@ -65,16 +65,14 @@ public class Simulator208_Controller implements Initializable{
 				while(true)
 				{
 					
-					str = String.valueOf(data_208.elevator[0].max_weigth);
+					str = String.valueOf(data_208.elevator[0].current_floor + "F");
 				
-					
 					Platform.runLater(()->{
 						state_floor.setText(str);
 					});
 					
-					data_208.elevator[0].max_weigth++;
-					
-					try{Thread.sleep(1000);} catch (Exception e){}
+					try{Thread.sleep(100);} catch (Exception e){}
+					// 0.1초마다 UI수정
 				}
 			}
 		};

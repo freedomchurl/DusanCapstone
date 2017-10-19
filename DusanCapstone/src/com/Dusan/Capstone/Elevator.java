@@ -5,7 +5,7 @@ public class Elevator {
 	public int current_floor; // 현재 층을 알려준다.
 	public int inner_people; // 현재 안에 타고 있는 사람을 알려준다. 
 	
-	
+	public int max_people = 15; 
 	public double max_weigth = 600;
 	public double current_wiegth;
 	

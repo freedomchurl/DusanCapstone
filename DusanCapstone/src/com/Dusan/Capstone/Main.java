@@ -17,21 +17,15 @@ import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
 	
-	Simulator208 my208 = new Simulator208();
-	Simulator310 my310 = new Simulator310();
-	
-	// 208,310의 엘리베이터 모습을 담는다.
+	Simulator mySimulator = new Simulator();
+	// Simulator 객체를 만든다. 
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
-			my310.setStage(primaryStage);
-			// 310관은 primaryStage를 부여한다. 
-			
-			my310.StartWindow();
-			my208.StartWindow();
-			
+			mySimulator.setStage(primaryStage);
+			mySimulator.StartWindow();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

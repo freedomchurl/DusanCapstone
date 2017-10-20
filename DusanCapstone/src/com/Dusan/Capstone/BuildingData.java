@@ -67,6 +67,7 @@ public class BuildingData {
 			for(int j=0;j<high-low+1;j++)
 			{
 				front[i][j] = new People();
+				front[i][j].floor = j+1;
 			}
 		}
 		
@@ -178,74 +179,195 @@ public class BuildingData {
 					
 					while(isPeople == false)
 					{
-						if(e_front[current_floor-1].people_num!=0) // 현재층이 0이 아니라면
+
+						if(e_elevator.moving == 1) // 상승중이었다면
 						{
-							e_elevator.moving = e_front[current_floor-1].moving;
-							
-							try
+							for(int i=current_floor;i<=6;i++)
 							{
-								Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+								if(e_front[i-1].moving == 1 && e_front[i-1].people_num!=0) // 그 앞의 사람들의 목표도 위라면, 그리고  0이 아니라면
+								{
+									// 거기로 가야해 중간은 무시하고.
+									try
+									{
+										Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+									}
+									catch(Exception e)
+									{}
+									
+									e_elevator.inner_people = e_front[i-1].people_num;
+									e_front[i-1].setPeople(false, 0);
+									e_front[i-1].moving = 0;
+									
+									if(e_elevator.inner_people != 0)
+										isPeople = true;
+									
+									break;
+								}
 							}
-							catch(Exception e)
-							{}
-							
-							e_elevator.inner_people = e_front[current_floor-1].people_num;
-							e_front[current_floor-1].setPeople(false, 0);
-							e_front[current_floor-1].moving = 0;
 							
 							
-							if(e_elevator.inner_people != 0)
-								isPeople = true;
+							
+						
 						}
-						else // 현재 층이 0명이라면, upper low를 바꿔가며 가까운곳 검사. 그 와중에 current가 나오면 태우면된다.
+						else if(e_elevator.moving == -1) // 하강중이었다면
 						{
-							if(e_front[upper-1].people_num!=0) // 현재층이 0이 아니라면
+							for(int i=current_floor;i>=1;i++)
 							{
-								e_elevator.moving = e_front[upper-1].moving;
-								
-								try
+								if(e_front[i-1].moving == -1 && e_front[i-1].people_num!=0) // 그 앞의 사람들의 목표도 위라면, 그리고  0이 아니라면
 								{
-									Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+									// 거기로 가야해 중간은 무시하고.
+									try
+									{
+										Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+									}
+									catch(Exception e)
+									{}
+									
+									e_elevator.inner_people = e_front[i-1].people_num;
+									e_front[i-1].setPeople(false, 0);
+									e_front[i-1].moving = 0;
+									
+									if(e_elevator.inner_people != 0)
+										isPeople = true;
+									
+									break;
 								}
-								catch(Exception e)
-								{}
-								
-								e_elevator.inner_people = e_front[upper-1].people_num;
-								e_front[upper-1].setPeople(false, 0);
-								e_front[upper-1].moving = 0;
-								
-								if(e_elevator.inner_people != 0)
-									isPeople = true;
 							}
-							else if(e_front[low-1].people_num!=0) // 현재층이 0이 아니라면
+							
+							
+						}
+						else if(e_elevator.moving == 0)
+						{
+							// 멈춰있던 과정이라면 , 1층에 있던 느낌, 혹은 6층에 있는 느낌
+							if(e_elevator.current_floor ==1) // 1층이라면
 							{
-								e_elevator.moving = e_front[low-1].moving;
-								
-								try
+								for(int i=1;i<=6;i++) // 반대로 가장 먼곳부터 탐색해야겠다.
 								{
-									Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+									if( e_front[i-1].moving == 1 && e_front[i-1].people_num!=0) // 그 앞의 사람들의 목표도 위라면, 그리고  0이 아니라면
+									{
+										// 거기로 가야해 중간은 무시하고.
+										
+										e_elevator.moving = e_front[i-1].moving;
+										// 그 움직임을 얻고
+										try
+										{
+											Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+										}
+										catch(Exception e)
+										{}
+										
+										for(int j =1;j<=i;j++)
+										{
+											e_elevator.current_floor++; // 층을 계속 올리고
+											try
+											{
+												Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+											}
+											catch(Exception e)
+											{}
+										}
+										
+										e_elevator.inner_people = e_front[i-1].people_num;
+										e_front[i-1].setPeople(false, 0);
+										e_front[i-1].moving = 0;
+										
+										if(e_elevator.inner_people != 0)
+											isPeople = true;
+										
+										break;
+									}
 								}
-								catch(Exception e)
-								{}
+							}
+							else if(e_elevator.current_floor == 6) // 6층이라면
+							{
+								for(int i=6;i>=1;i--) // 반대로 가장 먼곳부터 탐색해야겠다.
+								{
+									if( e_front[i-1].moving == -1 && e_front[i-1].people_num!=0) // 그 앞의 사람들의 목표도 위라면, 그리고  0이 아니라면
+									{
+										// 거기로 가야해 중간은 무시하고.
+										
+										e_elevator.moving = e_front[i-1].moving;
+										// 그 움직임을 얻고
+										try
+										{
+											Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+										}
+										catch(Exception e)
+										{}
+										
+										for(int j =6;j>=i;j--)
+										{
+											e_elevator.current_floor--; // 층을 계속 올리고
+											try
+											{
+												Thread.sleep(2000); // 2초 쉬고 -> 사람태우는데 드는 시간
+											}
+											catch(Exception e)
+											{}
+										}
+										
+										e_elevator.inner_people = e_front[i-1].people_num;
+										e_front[i-1].setPeople(false, 0);
+										e_front[i-1].moving = 0;
+										
+										if(e_elevator.inner_people != 0)
+											isPeople = true;
+										
+										break;
+									}
+								}
+							}
+						}
+						
+						
+						// 이 과정을 거치고나서도, 태운 사람이 없다면. 즉 3층에서 상승으로 끝낫는데 4 5 6층이 다 하강이었다면
+						if(e_elevator.isEmpty() == true) // 비어있다면
+						{
+							if(e_front[e_elevator.current_floor-1].people_num!=0) // 현재 층이 0이 아니라면, 
+							{
+								e_elevator.inner_people = e_front[e_elevator.current_floor-1].people_num;
+								e_elevator.moving = e_front[e_elevator.current_floor-1].moving;
 								
-								e_elevator.inner_people = e_front[low-1].people_num;
-								e_front[low-1].setPeople(false, 0);
-								e_front[low-1].moving = 0;
+								e_front[e_elevator.current_floor-1].setPeople(false, 0);
+								e_front[e_elevator.current_floor-1].moving = 0;
 								
 								if(e_elevator.inner_people != 0)
 									isPeople = true;
 							}
 							else
 							{
-								upper++;
-								low--;
-
+								if(e_front[upper-1].people_num!=0) // 현재 층이 0이 아니라면, 
+								{
+									e_elevator.inner_people = e_front[upper-1].people_num;
+									e_elevator.moving = e_front[upper-1].moving;
+									
+									e_front[upper-1].setPeople(false, 0);
+									e_front[upper-1].moving = 0;
+									
+									if(e_elevator.inner_people != 0)
+										isPeople = true;
+								}
+								else if(e_front[low-1].people_num!=0) // 현재 층이 0이 아니라면, 
+								{
+									e_elevator.inner_people = e_front[low-1].people_num;
+									e_elevator.moving = e_front[low-1].moving;
+									
+									e_front[low-1].setPeople(false, 0);
+									e_front[low-1].moving = 0;
+									
+									if(e_elevator.inner_people != 0)
+										isPeople = true;
+								}
+								
+								
 								if(upper>6)
 									upper = 6;
 								if(low<1)
 									low = 1;
 							}
-						}
+						}	
+							
+						//}
 						
 					}
 				}
@@ -280,7 +402,7 @@ public class BuildingData {
 							
 							if(e_elevator.isEmpty() == true)
 							{
-								e_elevator.moving = 0;
+								//e_elevator.moving = 0; -> 엘리베이터의 가고있던 운행방향정보는 담아놓자.
 								e_elevator.inner_people = 0;
 								// 여기도 사람을 채워야한다. -> 이건 위에서 다시 채우게된다.
 							}
@@ -331,7 +453,7 @@ public class BuildingData {
 							
 							if(e_elevator.isEmpty() == true)
 							{
-								e_elevator.moving = 0;
+								//e_elevator.moving = 0;
 								e_elevator.inner_people = 0;
 								// 여기도 사람을 채워야한다. -> 이건 위에서 다시 채우게된다.
 							}

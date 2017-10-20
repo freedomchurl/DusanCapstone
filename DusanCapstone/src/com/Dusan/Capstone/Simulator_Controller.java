@@ -22,7 +22,8 @@ public class Simulator_Controller implements Initializable{
 	public String up_arrow = "arrow-up.png";
 	public String down_arrow = "arrow-down.png";
 	
-	
+	public String people_down = "left-arrow.png";
+	public String people_up = "upper_people.png";
 	
 	public Thread UIThread = null;
 	
@@ -102,6 +103,7 @@ public class Simulator_Controller implements Initializable{
 			// my_data에서 데이터를 가져와서 UI 변경만을 한다.
 			
 			String [] floor_people = new String[12];
+			int [] front_moving = new int[12];
 			
 			public void run()
 			{
@@ -122,6 +124,8 @@ public class Simulator_Controller implements Initializable{
 					
 					this.SetFloorNum();
 					// 수정필요 - 여기서 1층의 값은 라즈베리파이로부터 받아와야 한다.
+					
+					this.SetFrontMoving();
 					
 					Platform.runLater(()->{
 						// 여기서 UI를 변경하도록 한다.
@@ -145,12 +149,142 @@ public class Simulator_Controller implements Initializable{
 						// 엘리베이터 화살 초기화
 						this.SetElevArrow(leftfloor, leftmove, rightfloor, rightmove);
 						// 엘리베이터 화살 UI 변경
-						
+						this.SetUIFront();
 						
 						// 각 층의 사람들에 대한 화살표만 수정되면 된다. 
 					});
 					
 					try{UIThread.sleep(50);} catch(Exception e){}
+				}
+			}
+			
+			
+			public void SetUIFront()
+			{
+				
+					try {
+						
+						left_people_1.setOpacity(1);
+						left_people_2.setOpacity(1);
+						left_people_3.setOpacity(1);
+						left_people_4.setOpacity(1);
+						left_people_5.setOpacity(1);
+						left_people_6.setOpacity(1);
+						
+						right_people_1.setOpacity(1);
+						right_people_2.setOpacity(1);
+						right_people_3.setOpacity(1);
+						right_people_4.setOpacity(1);
+						right_people_5.setOpacity(1);
+						right_people_6.setOpacity(1);
+						
+						
+						
+						if(front_moving[0]==1)
+							left_people_1.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[0]==-1)
+							left_people_1.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_1.setOpacity(0);
+						
+						if(front_moving[1]==1)
+							left_people_2.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[1]==-1)
+							left_people_2.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_2.setOpacity(0);
+						
+						if(front_moving[2]==1)
+							left_people_3.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[2]==-1)
+							left_people_3.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_3.setOpacity(0);
+						
+						if(front_moving[3]==1)
+							left_people_4.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[3]==-1)
+							left_people_4.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_4.setOpacity(0);
+						
+						if(front_moving[4]==1)
+							left_people_5.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[4]==-1)
+							left_people_5.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_5.setOpacity(0);
+						
+						if(front_moving[5]==1)
+							left_people_6.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[5]==-1)
+							left_people_6.setImage(new Image(new FileInputStream(people_down)));
+						else
+							left_people_6.setOpacity(0);
+						
+						
+						
+						
+						///////////
+						
+						if(front_moving[6]==1)
+							right_people_1.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[6]==-1)
+							right_people_1.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_1.setOpacity(0);
+						
+						if(front_moving[7]==1)
+							right_people_2.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[7]==-1)
+							right_people_2.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_2.setOpacity(0);
+						
+						if(front_moving[8]==1)
+							right_people_3.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[8]==-1)
+							right_people_3.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_3.setOpacity(0);
+						
+						if(front_moving[9]==1)
+							right_people_4.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[9]==-1)
+							right_people_4.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_4.setOpacity(0);
+						
+						if(front_moving[10]==1)
+							right_people_5.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[10]==-1)
+							right_people_5.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_5.setOpacity(0);
+						
+						if(front_moving[11]==1)
+							right_people_6.setImage(new Image(new FileInputStream(people_up)));
+						else if(front_moving[11]==-1)
+							right_people_6.setImage(new Image(new FileInputStream(people_down)));
+						else
+							right_people_6.setOpacity(0);
+						
+						
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			public void SetFrontMoving()
+			{
+				for(int i=0;i<2;i++)
+				{
+					for(int j=0;j<6;j++)
+					{
+						this.front_moving[i*6+j] = my_data.front[i][j].moving;
+					}
 				}
 			}
 			

@@ -105,50 +105,53 @@ public class Simulator_Controller implements Initializable{
 			
 			public void run()
 			{
-				int leftfloor = my_data.elevator[0].current_floor;
-				int rightfloor = my_data.elevator[1].current_floor;
-				// 현재 층을 받아오고
-				
-				int leftinner = my_data.elevator[0].inner_people;
-				int rightinner = my_data.elevator[1].inner_people;
-				
-				int leftmove = my_data.elevator[0].moving;
-				int rightmove = my_data.elevator[1].moving;
-				
-				String str_leftinner = leftinner + "/15명";
-				String str_rightinner = rightinner + "/15명";
-				
-				this.SetFloorNum();
-				// 수정필요 - 여기서 1층의 값은 라즈베리파이로부터 받아와야 한다.
-				
-				Platform.runLater(()->{
-					// 여기서 UI를 변경하도록 한다.
+				while(true)
+				{
+					int leftfloor = my_data.elevator[0].current_floor;
+					int rightfloor = my_data.elevator[1].current_floor;
+					// 현재 층을 받아오고
 					
-					this.InitElevUI();
-					this.SetElevUI(leftfloor, rightfloor);
-					// 엘리베이터 모양 표시
+					int leftinner = my_data.elevator[0].inner_people;
+					int rightinner = my_data.elevator[1].inner_people;
 					
-					inner_left.setText(str_leftinner);
-					inner_right.setText(str_rightinner);
-					// 엘리베이터 내부 인원
-					// 프로그레스바 진행
-					left_bar.setProgress((double)leftinner /15);
-					right_bar.setProgress((double)rightinner/15);
+					int leftmove = my_data.elevator[0].moving;
+					int rightmove = my_data.elevator[1].moving;
 					
+					String str_leftinner = leftinner + "/15명";
+					String str_rightinner = rightinner + "/15명";
 					
-					this.SetFloorUI();
-					// 각 층의 인원
+					this.SetFloorNum();
+					// 수정필요 - 여기서 1층의 값은 라즈베리파이로부터 받아와야 한다.
 					
-					this.InitElevArrow();
-					// 엘리베이터 화살 초기화
-					this.SetElevArrow(leftfloor, leftmove, rightfloor, rightmove);
-					// 엘리베이터 화살 UI 변경
+					Platform.runLater(()->{
+						// 여기서 UI를 변경하도록 한다.
+						
+						this.InitElevUI();
+						this.SetElevUI(leftfloor, rightfloor);
+						// 엘리베이터 모양 표시
+						
+						inner_left.setText(str_leftinner);
+						inner_right.setText(str_rightinner);
+						// 엘리베이터 내부 인원
+						// 프로그레스바 진행
+						left_bar.setProgress((double)leftinner /15);
+						right_bar.setProgress((double)rightinner/15);
+						
+						
+						this.SetFloorUI();
+						// 각 층의 인원
+						
+						this.InitElevArrow();
+						// 엘리베이터 화살 초기화
+						this.SetElevArrow(leftfloor, leftmove, rightfloor, rightmove);
+						// 엘리베이터 화살 UI 변경
+						
+						
+						// 각 층의 사람들에 대한 화살표만 수정되면 된다. 
+					});
 					
-					
-					// 각 층의 사람들에 대한 화살표만 수정되면 된다. 
-				});
-				
-				try{UIThread.sleep(50);} catch(Exception e){}
+					try{UIThread.sleep(50);} catch(Exception e){}
+				}
 			}
 			
 			public void SetElevArrow(int left, int left_moving, int right, int right_moving)
@@ -168,6 +171,7 @@ public class Simulator_Controller implements Initializable{
 					tmp_left = left_moving_5;
 				else if(left==6)
 					tmp_left = left_moving_6;
+				
 				
 				if(right==1)
 					tmp_right = right_moving_1;
@@ -242,6 +246,21 @@ public class Simulator_Controller implements Initializable{
 				floor_people[9] = new String(my_data.front[1][3].people_num + "명");
 				floor_people[10] = new String(my_data.front[1][4].people_num + "명");
 				floor_people[11] = new String(my_data.front[1][5].people_num + "명");
+				
+				System.out.println("*" + floor_people[0]);
+				System.out.println("*" + floor_people[1]);
+				System.out.println("*" + floor_people[2]);
+				System.out.println("*" + floor_people[3]);
+				System.out.println("*" + floor_people[4]);
+				System.out.println("*" + floor_people[5]);
+				
+				System.out.println("*" + floor_people[6]);
+				System.out.println("*" + floor_people[7]);
+				System.out.println("*" + floor_people[8]);
+				System.out.println("*" + floor_people[9]);
+				System.out.println("*" + floor_people[10]);
+				System.out.println("*" + floor_people[11]);
+				
 				
 			}
 			public void SetFloorUI()

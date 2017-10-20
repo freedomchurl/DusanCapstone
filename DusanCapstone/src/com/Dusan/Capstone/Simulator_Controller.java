@@ -131,6 +131,10 @@ public class Simulator_Controller implements Initializable{
 					inner_left.setText(str_leftinner);
 					inner_right.setText(str_rightinner);
 					// 엘리베이터 내부 인원
+					// 프로그레스바 진행
+					left_bar.setProgress((double)leftinner /15);
+					right_bar.setProgress((double)rightinner/15);
+					
 					
 					this.SetFloorUI();
 					// 각 층의 인원
@@ -140,10 +144,8 @@ public class Simulator_Controller implements Initializable{
 					this.SetElevArrow(leftfloor, leftmove, rightfloor, rightmove);
 					// 엘리베이터 화살 UI 변경
 					
-					// 프로그레스바 진행
-					left_bar.setProgress((double)leftinner /15);
-					right_bar.setProgress((double)rightinner/15);
 					
+					// 각 층의 사람들에 대한 화살표만 수정되면 된다. 
 				});
 				
 				try{UIThread.sleep(50);} catch(Exception e){}

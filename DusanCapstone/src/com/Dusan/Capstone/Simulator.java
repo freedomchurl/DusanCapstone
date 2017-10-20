@@ -45,6 +45,7 @@ public class Simulator {
 		this.InitBuilding();
 		my_controller.setData(this.building_data);
 		my_controller.StartUIUpdate();
+		this.building_data.SimulStart();
 	}
 	
 	public void InitBuilding()

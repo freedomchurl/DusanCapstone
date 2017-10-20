@@ -13,6 +13,10 @@ public class BuildingData {
 	
 	public int num_elev = 0;
 	
+	public Thread peopleThread = null;
+	public Thread elevThread = null;
+	// 이 부분 추가하여야 한다. 
+	
 	BuildingData()
 	{
 		
@@ -66,5 +70,10 @@ public class BuildingData {
 			}
 		}
 		
+	}
+	
+	public void SimulStart()
+	{
+		// 이부분 채워넣어야한다. 
 	}
 }

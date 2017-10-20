@@ -1,5 +1,8 @@
 package com.Dusan.Capstone;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,13 +13,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class Simulator_Controller implements Initializable{
 
-	public String up_arrow = "../../../../resource/arrow-up.png";
-	public String down_arrow = "../../../../resource/arrow-down.png";
+	public String up_arrow = "arrow-up.png";
+	public String down_arrow = "arrow-down.png";
+	
+	
 	
 	public Thread UIThread = null;
 	
@@ -94,6 +100,9 @@ public class Simulator_Controller implements Initializable{
 		{
 			// UI 업데이트 쓰레드를 돌린다.
 			// my_data에서 데이터를 가져와서 UI 변경만을 한다.
+			
+			String [] floor_people = new String[12];
+			
 			public void run()
 			{
 				int leftfloor = my_data.elevator[0].current_floor;
@@ -103,8 +112,14 @@ public class Simulator_Controller implements Initializable{
 				int leftinner = my_data.elevator[0].inner_people;
 				int rightinner = my_data.elevator[1].inner_people;
 				
-				String str_leftinner = leftinner + "/15";
-				String str_rightinner = rightinner + "/15";
+				int leftmove = my_data.elevator[0].moving;
+				int rightmove = my_data.elevator[1].moving;
+				
+				String str_leftinner = leftinner + "/15명";
+				String str_rightinner = rightinner + "/15명";
+				
+				this.SetFloorNum();
+				// 수정필요 - 여기서 1층의 값은 라즈베리파이로부터 받아와야 한다.
 				
 				Platform.runLater(()->{
 					// 여기서 UI를 변경하도록 한다.
@@ -115,9 +130,133 @@ public class Simulator_Controller implements Initializable{
 					
 					inner_left.setText(str_leftinner);
 					inner_right.setText(str_rightinner);
+					// 엘리베이터 내부 인원
+					
+					this.SetFloorUI();
+					// 각 층의 인원
+					
+					this.InitElevArrow();
+					// 엘리베이터 화살 초기화
+					this.SetElevArrow(leftfloor, leftmove, rightfloor, rightmove);
+					// 엘리베이터 화살 UI 변경
+					
+					// 프로그레스바 진행
+					left_bar.setProgress((double)leftinner /15);
+					right_bar.setProgress((double)rightinner/15);
+					
 				});
 				
 				try{UIThread.sleep(50);} catch(Exception e){}
+			}
+			
+			public void SetElevArrow(int left, int left_moving, int right, int right_moving)
+			{
+				ImageView tmp_left = null;
+				ImageView tmp_right = null;
+				
+				if(left==1)
+					tmp_left = left_moving_1;
+				else if(left==2)
+					tmp_left = left_moving_2;
+				else if(left==3)
+					tmp_left = left_moving_3;
+				else if(left==4)
+					tmp_left = left_moving_4;
+				else if(left==5)
+					tmp_left = left_moving_5;
+				else if(left==6)
+					tmp_left = left_moving_6;
+				
+				if(right==1)
+					tmp_right = right_moving_1;
+				else if(right==2)
+					tmp_right = right_moving_2;
+				else if(right==3)
+					tmp_right = right_moving_3;
+				else if(right==4)
+					tmp_right = right_moving_4;
+				else if(right==5)
+					tmp_right = right_moving_5;
+				else if(right==6)
+					tmp_right = right_moving_6;
+				
+				
+				tmp_left.setOpacity(1);
+				tmp_right.setOpacity(1);
+				// 보이게 하고
+				
+				
+				try {
+					if(left_moving == 1)
+					tmp_left.setImage(new Image(new FileInputStream(up_arrow)));
+					else if(left_moving==-1) // 하강
+						tmp_left.setImage(new Image(new FileInputStream(down_arrow)));
+					else
+						tmp_left.setOpacity(0);
+					
+					if(right_moving == 1)
+						tmp_right.setImage(new Image(new FileInputStream(up_arrow)));
+						else if(right_moving==-1) // 하강
+							tmp_right.setImage(new Image(new FileInputStream(down_arrow)));
+						else
+							tmp_right.setOpacity(0);
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+			public void InitElevArrow()
+			{
+				left_moving_1.setOpacity(0);
+				left_moving_2.setOpacity(0);
+				left_moving_3.setOpacity(0);
+				left_moving_4.setOpacity(0);
+				left_moving_5.setOpacity(0);
+				left_moving_6.setOpacity(0);
+				
+				right_moving_1.setOpacity(0);
+				right_moving_2.setOpacity(0);
+				right_moving_3.setOpacity(0);
+				right_moving_4.setOpacity(0);
+				right_moving_5.setOpacity(0);
+				right_moving_6.setOpacity(0);
+			}
+			
+			public void SetFloorNum()
+			{
+				floor_people[0] = new String(my_data.front[0][0].people_num + "명");
+				floor_people[1] = new String(my_data.front[0][1].people_num + "명");
+				floor_people[2] = new String(my_data.front[0][2].people_num + "명");
+				floor_people[3] = new String(my_data.front[0][3].people_num + "명");
+				floor_people[4] = new String(my_data.front[0][4].people_num + "명");
+				floor_people[5] = new String(my_data.front[0][5].people_num + "명");
+				
+				floor_people[6] = new String(my_data.front[1][0].people_num + "명");
+				floor_people[7] = new String(my_data.front[1][1].people_num + "명");
+				floor_people[8] = new String(my_data.front[1][2].people_num + "명");
+				floor_people[9] = new String(my_data.front[1][3].people_num + "명");
+				floor_people[10] = new String(my_data.front[1][4].people_num + "명");
+				floor_people[11] = new String(my_data.front[1][5].people_num + "명");
+				
+			}
+			public void SetFloorUI()
+			{
+				left_1.setText(floor_people[0]);
+				left_2.setText(floor_people[1]);
+				left_3.setText(floor_people[2]);
+				left_4.setText(floor_people[3]);
+				left_5.setText(floor_people[4]);
+				left_6.setText(floor_people[5]);
+				
+				right_1.setText(floor_people[6]);
+				right_2.setText(floor_people[7]);
+				right_3.setText(floor_people[8]);
+				right_4.setText(floor_people[9]);
+				right_5.setText(floor_people[10]);
+				right_6.setText(floor_people[11]);
 			}
 			
 			public void SetElevUI(int left, int right)

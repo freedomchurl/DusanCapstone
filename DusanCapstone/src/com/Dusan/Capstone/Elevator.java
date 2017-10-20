@@ -45,7 +45,7 @@ public class Elevator {
 	
 	public void PrintPeople()
 	{
-		System.out.println(this.inner_people + "명이 있습니다");
+		//System.out.println(this.inner_people + "명이 있습니다");
 	}
 	
 	// 사람이 타고 내리는 부분도 넣어야한다. 

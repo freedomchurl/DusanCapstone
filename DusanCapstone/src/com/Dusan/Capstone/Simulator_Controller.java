@@ -381,19 +381,7 @@ public class Simulator_Controller implements Initializable{
 				floor_people[10] = new String(my_data.front[1][4].people_num + "Έν");
 				floor_people[11] = new String(my_data.front[1][5].people_num + "Έν");
 				
-				System.out.println("*" + floor_people[0]);
-				System.out.println("*" + floor_people[1]);
-				System.out.println("*" + floor_people[2]);
-				System.out.println("*" + floor_people[3]);
-				System.out.println("*" + floor_people[4]);
-				System.out.println("*" + floor_people[5]);
 				
-				System.out.println("*" + floor_people[6]);
-				System.out.println("*" + floor_people[7]);
-				System.out.println("*" + floor_people[8]);
-				System.out.println("*" + floor_people[9]);
-				System.out.println("*" + floor_people[10]);
-				System.out.println("*" + floor_people[11]);
 				
 				
 			}

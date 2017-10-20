@@ -76,6 +76,8 @@ public class Main extends Application {
 		System.out.println(getXml);
 		*/
 		
+		
+		
 		launch(args);
 		
 		

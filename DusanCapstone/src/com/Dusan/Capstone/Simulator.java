@@ -16,7 +16,7 @@ public class Simulator {
 	FXMLLoader fx_loader = null;
 	
 	
-	public BuildingData building_data = new BuildingData();
+	public BuildingData building_data = new BuildingData(2,"빌딩",1,6);
 	
 	public void setStage(Stage input)
 	{
@@ -66,7 +66,7 @@ public class Simulator {
 		this.building_data.elevator = new Elevator[2];
 		
 		// front 초기화
-		this.building_data.front = new People[2][6];
+		//this.building_data.front = new People[2][6];
 		// 엘리베이터가 2개, 6개 층
 		
 		for(int i=0;i<2;i++)
@@ -76,7 +76,7 @@ public class Simulator {
 			
 			for(int j=0;j<6;j++)
 			{
-				this.building_data.front[i][j] = new People();
+				//this.building_data.front[i][j] = new People();
 			}
 		}
 		

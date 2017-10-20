@@ -1,5 +1,11 @@
 package com.Dusan.Capstone;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class BuildingData {
 
 	public Elevator[] elevator = null;
@@ -66,8 +72,10 @@ public class BuildingData {
 		{
 			for(int j=0;j<high-low+1;j++)
 			{
+			
 				front[i][j] = new People();
 				front[i][j].floor = j+1;
+				System.out.println(front[i][j].floor + " 층입니다");
 			}
 		}
 		
@@ -96,7 +104,106 @@ public class BuildingData {
 			elevThread[i].start();
 		}
 	
-	}
+		
+		
+		Thread writeThread = new Thread(){
+			public void run()
+			{
+				
+				// 여기서는 네트워크 통신으로 가져와야 한다.
+					while(true)
+					{
+					
+						String [][] front_String = new String[2][6];
+						
+						for(int i=0;i<2;i++)
+						{
+							for(int j=0;j<6;j++)
+							{
+								front_String[i][j] = String.valueOf(front[i][j].people_num);
+								System.out.println("이언지 바보 = " + front[i][j].people_num);
+							}
+						}
+						
+						String inputuse = "http://35.201.215.220/write_front.php?";
+						
+						inputuse = inputuse + "f1=" + front_String[0][0] + "&f2="  + front_String[0][1] + "&f3="  +front_String[0][2] +"&f4="  +front_String[0][3] +"&f5="  +
+						front_String[0][4] +"&f6="  +front_String[0][5] + "&elev=0";
+								
+						System.out.println(inputuse + "이철 천재");
+					
+						SendHttp(inputuse);
+						
+						inputuse = "http://35.201.215.220/write_front.php?";
+						
+						inputuse = inputuse + "f1=" + front_String[1][0] + "&f2="  + front_String[1][1] + "&f3="  +front_String[1][2] +"&f4="  +front_String[1][3] +"&f5="  +
+								front_String[1][4] +"&f6="  +front_String[1][5] + "&elev=1";
+						
+						SendHttp(inputuse);
+						try
+						{
+							this.sleep(300);
+						}catch(Exception e)
+						{}
+					}
+				
+			}
+			
+			public void SendHttp(String input_url)
+			{
+				try
+				{
+			String str = URLEncoder.encode("한글","UTF-8");
+			//String url = "http://35.201.215.220/write_front?.php";
+			String url = new String(input_url);
+			URL _url = new URL(url);
+			
+			HttpURLConnection conn = (HttpURLConnection) _url.openConnection();
+			
+			conn.setDoInput(true);
+			conn.setDoOutput(false);
+			
+			conn.setUseCaches(false);
+			
+			conn.setReadTimeout(20000);
+			
+			conn.setRequestMethod("GET");
+			
+			
+			StringBuffer sb = new StringBuffer();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			
+			for(;;)
+			{
+				String line = br.readLine();
+				
+				if(line == null)
+					break;
+				
+				sb.append(line + "\n");
+			}
+			
+			
+			br.close();
+			
+			conn.disconnect();
+			
+			String getXml = sb.toString();
+			
+			System.out.println(getXml);
+			
+			}catch(Exception e){}
+			}
+		};
+		
+		writeThread.start();
+		}
+				
+			
+		}
+
+	
 	
 	class PeopleThread extends Thread{
 
@@ -119,6 +226,7 @@ public class BuildingData {
 				if(p_front.check==false) // 만들어진데이터가 없다면
 				{
 					p_front.setPeople(true,0);
+					System.out.println("aaaaa" + " " + p_floor);
 					
 					if(p_floor==1 && (p_front.people_num !=0)) // 1층이라면, 상승만 가능
 						p_front.moving = 1;
@@ -127,7 +235,7 @@ public class BuildingData {
 						p_front.moving = -1;
 					
 					//만들도록 한다. 								
-					System.out.println((p_elev_num) +"번째 엘리베이터 " + (p_floor) + "층에 " + p_front.people_num + "명이 생겼다");
+					//System.out.println((p_elev_num) +"번째 엘리베이터 " + (p_floor) + "층에 " + p_front.people_num + "명이 생겼다");
 				}					
 				// 랜덤시간을 기다리도록 한다. 0~1초					
 				int randTime = (int)(Math.random() * 3) + 3;
@@ -211,7 +319,7 @@ public class BuildingData {
 						}
 						else if(e_elevator.moving == -1) // 하강중이었다면
 						{
-							for(int i=current_floor;i>=1;i++)
+							for(int i=current_floor;i>=1;i--)
 							{
 								if(e_front[i-1].moving == -1 && e_front[i-1].people_num!=0) // 그 앞의 사람들의 목표도 위라면, 그리고  0이 아니라면
 								{
@@ -485,7 +593,7 @@ public class BuildingData {
 			}
 		}
 	}
-}
+
 
 
 

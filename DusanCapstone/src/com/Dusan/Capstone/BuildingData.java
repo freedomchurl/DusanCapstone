@@ -120,8 +120,8 @@ public class BuildingData {
 						{
 							for(int j=0;j<6;j++)
 							{
-								front_String[i][j] = String.valueOf(front[i][j].people_num);
-								System.out.println("이언지 바보 = " + front[i][j].people_num);
+								front_String[i][j] = String.valueOf(front[i][j].people_num + "/" + front[i][j].moving);
+								//System.out.println("이언지 바보 = " + front[i][j].people_num);
 							}
 						}
 						
@@ -130,16 +130,38 @@ public class BuildingData {
 						inputuse = inputuse + "f1=" + front_String[0][0] + "&f2="  + front_String[0][1] + "&f3="  +front_String[0][2] +"&f4="  +front_String[0][3] +"&f5="  +
 						front_String[0][4] +"&f6="  +front_String[0][5] + "&elev=0";
 								
-						System.out.println(inputuse + "이철 천재");
+						//System.out.println(inputuse + "이철 천재");
 					
 						SendHttp(inputuse);
 						
+						// 여기서는 오른쪽 엘리베이터 앞의 인원을 쓰고있다. 
 						inputuse = "http://35.201.215.220/write_front.php?";
 						
 						inputuse = inputuse + "f1=" + front_String[1][0] + "&f2="  + front_String[1][1] + "&f3="  +front_String[1][2] +"&f4="  +front_String[1][3] +"&f5="  +
 								front_String[1][4] +"&f6="  +front_String[1][5] + "&elev=1";
 						
 						SendHttp(inputuse);
+						
+						
+						// 여기서는 엘리베티어 내부 인원을 써야한다.  
+						inputuse = "http://35.201.215.220/write_state.php?";
+						
+						inputuse = inputuse + "num=" + "01" + "&floor="  + String.valueOf(elevator[0].current_floor) + "&full="+ "15" +"&current="  +String.valueOf(elevator[0].inner_people) +
+								"&moving="  + String.valueOf(elevator[0].moving);
+						
+						
+				
+						SendHttp(inputuse);
+						
+						inputuse = "http://35.201.215.220/write_state.php?";
+						
+						inputuse = inputuse + "num=" + "02" + "&floor="  + String.valueOf(elevator[1].current_floor) + "&full="+ "15" +"&current="  +String.valueOf(elevator[1].inner_people) +
+								"&moving="  + String.valueOf(elevator[1].moving);
+						
+						
+				
+						SendHttp(inputuse);
+						
 						try
 						{
 							this.sleep(300);
@@ -191,7 +213,7 @@ public class BuildingData {
 			
 			String getXml = sb.toString();
 			
-			System.out.println(getXml);
+			//System.out.println(getXml);
 			
 			}catch(Exception e){}
 			}
